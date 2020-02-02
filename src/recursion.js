@@ -22,13 +22,13 @@ var factorial = function(n) {
 // 2. Compute the sum of an array of integers.
 // sum([1,2,3,4,5,6]); // 21
 var sum = function(array) {
-	arrayNew = array.slice();
+	var arrayNew = array.slice();
 	if (array.length === 0) {
 		return 0;
 	} else if (arrayNew.length === 1) {
-		return arrayNew[0];
+		return parseInt(arrayNew[0]);
 	} else {
-	    return arrayNew.pop() + sum(arrayNew);
+	    return parseInt(arrayNew.pop()) + sum(arrayNew);
 	}
 	
 };
@@ -36,16 +36,20 @@ var sum = function(array) {
 // 3. Sum all numbers in an array containing nested arrays.
 // arraySum([1,[2,3],[[4]],5]); // 15
 var arraySum = function(array) {
-    arrayNew = array.slice();
-    if (arrayNew.length === 0) {
+    var arrayNew = array.slice();
+	if (arrayNew.length === 0) {
 		return 0;
-	} else if (arrayNew.length === 1 && Array.isArray(arrayNew[0]) === false) {
-		return arrayNew[0];
-	} else if (Array.isArray(arrayNew[0]) === true) {
-		arraySum(arrayNew[0]);
-	} else if (Array.isArray(arrayNew.pop()) === false) {
-	    return arrayNew.pop() + arraySum(arrayNew);
-	} 
+	} else if (Array.isArray(arrayNew.slice(-1)[0]) && arrayNew.slice(-1)[0].length > 1) {
+		var nestedArray = arrayNew.pop();
+		for (var i = 0; i < nestedArray.length; i++) {
+          arrayNew.push(nestedArray[i]);
+		}
+		return arraySum(arrayNew); 
+	} else if (arrayNew.length === 1) {
+		return parseInt(arrayNew[0]);
+	} else {
+		return parseInt(arrayNew.pop()) + arraySum(arrayNew); 
+	}
 };
 
 // 4. Check if a number is even.
@@ -67,6 +71,10 @@ var isEven = function(n) {
 // sumBelow(10); // 45
 // sumBelow(7); // 21
 var sumBelow = function(n) {
+  b = n - 1;
+  if (b > 0) {
+	return b + sumBelow(b - 1);
+  }
 };
 
 // 6. Get the integers within a range (x, y).

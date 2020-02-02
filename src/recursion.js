@@ -71,15 +71,31 @@ var isEven = function(n) {
 // sumBelow(10); // 45
 // sumBelow(7); // 21
 var sumBelow = function(n) {
-  b = n - 1;
-  if (b > 0) {
-	return b + sumBelow(b - 1);
+  if (n === 0) {
+    return 0;
+  } else if ((n - 1) >= 0) {
+  	return (n - 1) + sumBelow(n - 1);
+  } else if ((n + 1) <= 0) {
+  	return (n + 1) + sumBelow(n + 1);
   }
 };
 
 // 6. Get the integers within a range (x, y).
 // range(2,9); // [3,4,5,6,7,8]
 var range = function(x, y) {
+	if (x === y || x + 1 === y || x - 1 === y) {
+        return [];
+	} else if (x < y) {
+	    if ((x + 1) < y) {
+	   	  var int = [x + 1];
+		  return int.concat((range((x + 1), y)));
+		}
+	} else if (x > y) {
+		if ((x - 1) > y) {
+		  var int = [x - 1];
+		  return int.concat((range((x - 1), y)));
+		}
+	}
 };
 
 // 7. Compute the exponent of a number.

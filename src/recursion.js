@@ -129,10 +129,25 @@ var powerOfTwo = function(n) {
 
 // 9. Write a function that reverses a string.
 var reverse = function(string) {
+	if (string.length > 0) {
+		var revStr = string.slice([string.length - 1]);
+		var nextStr = string.slice(0, [string.length - 1]);
+		return revStr.concat(reverse(nextStr));
+	}
 };
 
 // 10. Write a function that determines if a string is a palindrome.
 var palindrome = function(string) {
+	var removeSpaces = string.replace(' ', '');
+	var lowerCaseStr = removeSpaces.toLowerCase();
+	if (lowerCaseStr[0] !== lowerCaseStr[lowerCaseStr.length - 1]) {
+		return false;
+	} else if (lowerCaseStr.length > 0) {
+		var newStr = lowerCaseStr.slice(1, lowerCaseStr.length - 1);
+		return palindrome(newStr);
+	} else if (lowerCaseStr.length === 0) {
+		return true;
+	}
 };
 
 // 11. Write a function that returns the remainder of x divided by y without using the
@@ -141,16 +156,54 @@ var palindrome = function(string) {
 // modulo(17,5) // 2
 // modulo(22,6) // 4
 var modulo = function(x, y) {
+	var diff = x - y;
+	console.log(diff)
+	if (diff === 0) {
+		return 0;
+	} else if (diff < x) {
+		console.log(diff)
+		return diff;
+	} else {
+		x = diff;
+		return modulo(x, y);
+	}
 };
 
 // 12. Write a function that multiplies two numbers without using the * operator or
 // Math methods.
 var multiply = function(x, y) {
+  var result = 0;
+  if (x === 0 || y === 0) {
+  	return result;
+  } else if ((y > 0 && x > 0) || (y > 0 && x < 0)) {
+  	y--;
+  	result += x + multiply(x, y);
+  } else if ((y < 0 && x > 0) || (y < 0 && x < 0)) {
+  	y++;
+  	result -= x - multiply(x, y);
+  }
+  return result;
 };
 
 // 13. Write a function that divides two numbers without using the / operator or
 // Math methods to arrive at an approximate quotient (ignore decimal endings).
 var divide = function(x, y) {
+  var result = 0;
+  if (y === 0 && x < result) {
+	  return result;
+  } else if (y === 0 && x > result) {
+    return result;
+  } else if ((y > 0 && x > 0) || (y > 0 && x < 0)) {
+  	y--;
+  	result -= x + divide(x, y);
+  } else if (y < 0 && x > 0) {
+  	y++;
+  	result -= x - divide(x, y);
+  } else if (y < 0 && x < 0) {
+  	y++;
+  	result += x + divide(x, y);
+  }
+  return result;
 };
 
 // 14. Find the greatest common divisor (gcd) of two positive numbers. The GCD of two
